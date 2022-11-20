@@ -4,7 +4,7 @@ from enum import Enum
 
 import numpy as np
 from pylsl import StreamInlet, resolve_stream
-from sympy import fft, ifft
+from numpy.fft import fft, ifft
 
 
 class Stream(Enum):
