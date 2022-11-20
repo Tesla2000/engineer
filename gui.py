@@ -37,7 +37,7 @@ class Bird:
         window.blit(rotated_image, new_rect.topleft)
 
 
-def draw_window(window, bird, time):
+def display_concentration(window, bird, time):
     window.fill(black)
     bird.move(window, time)
     sleep(time)
