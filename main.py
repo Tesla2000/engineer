@@ -37,7 +37,7 @@ def show_image(image_path, display_duration=4000, break_duration=2000):
 def examine_MI(session, wait_before_display=2000, display_time=2000, break_time=2000, trials=60):
     for _ in range(trials):
         showing = threading.Thread(target=show_image, args=('imgs/' + (choice := random.choice(('l', 'r'))) +
-                                                            '_letter.png', display_time+wait_before_display
+                                                            '_letter.png', display_time + wait_before_display
                                                             , break_time))
         collecting = threading.Thread(target=collect_amplitude, args=
         (f'data/{session}/MI_' + ('right' if choice == 'r' else 'left') + '_hand.csv'
@@ -46,6 +46,38 @@ def examine_MI(session, wait_before_display=2000, display_time=2000, break_time=
         collecting.start()
         showing.join()
         collecting.join()
+
+
+def examine_SS(session, wait_before_display=2000, display_time=2000, break_time=2000, trials=60):
+    for _ in range(trials):
+        showing = threading.Thread(target=show_image, args=('imgs/' + (choice := random.choice(('t', 'n'))) +
+                                                            '_letter.png', display_time + wait_before_display
+                                                            , break_time))
+        collecting = threading.Thread(target=collect_amplitude, args=
+        (f'data/{session}/SS_' + ('no' if choice == 'n' else 'yes') + '.csv'
+         , wait_before_display, display_time, break_time))
+        showing.start()
+        collecting.start()
+        showing.join()
+        collecting.join()
+
+
+def examine_IS(session, wait_before_display=2000, display_time=2000, break_time=2000, trials=60):
+    for _ in range(trials):
+        showing = threading.Thread(target=show_image, args=('imgs/' + (choice := random.choice(('t', 'n'))) +
+                                                            '_letter.png', display_time + wait_before_display
+                                                            , break_time))
+        collecting = threading.Thread(target=collect_amplitude, args=
+        (f'data/{session}/IS_' + ('no' if choice == 'n' else 'yes') + '.csv'
+         , wait_before_display, display_time, break_time))
+        showing.start()
+        collecting.start()
+        showing.join()
+        collecting.join()
+
+
+def examine_concentration(session):
+    pass
 
 
 def collect_amplitude(write_to, wait_before_display=2000, display_time=2000, break_time=2000):
