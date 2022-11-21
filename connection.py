@@ -21,11 +21,12 @@ def take_data_amplitude(stream, n_channels):
 
 def take_data_frequency(stream, *filters, n_channels=8, max_frequency=60):
     start = time.time()
-    sample = np.empty((n_channels, max_frequency))
+    unfiltered, filtered = np.empty((n_channels, max_frequency)), np.empty((n_channels, max_frequency))
     for channel in range(n_channels):
-        channel_sample, _ = stream.pull_sample()
-        sample[channel + 1] = filter_sample(channel_sample[:max_frequency], filters)
-    return time.time() - start, sample
+        sample, _ = stream.pull_sample()
+        unfiltered[channel] = sample[:max_frequency]
+        filtered[channel] = filter_sample(unfiltered[channel], filters)
+    return time.time() - start, unfiltered, filtered
 
 
 def filter_sample(sample, *filters):
